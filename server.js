@@ -4,10 +4,15 @@ const dotenv = require('dotenv').config();
 const cors = require('cors');
 const bodyparser = require('body-parser');
 
-const app = express();
+/* import routes */
+const detailsRouter = require('./routes/details');
 
+const app = express();
 app.use(cors());
 app.use(bodyparser.json());
+
+/* use routes */
+app.use('/details', detailsRouter);
 
 const PORT = process.env.PORT || 8080;
 const URL = process.env.MONGODB_URL;
