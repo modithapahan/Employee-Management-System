@@ -12,7 +12,11 @@ const detailsSchema = new Schema({
     gender:{
         type: String
     },
-    nic:{
+    email:{
+        type: String,
+        required: true
+    },
+    city:{
         type: String,
         required: true
     },

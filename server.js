@@ -6,6 +6,7 @@ const bodyparser = require('body-parser');
 
 /* import routes */
 const detailsRouter = require('./routes/details');
+const userRouter = require('./routes/users');
 
 const app = express();
 app.use(cors());
@@ -13,6 +14,7 @@ app.use(bodyparser.json());
 
 /* use routes */
 app.use('/details', detailsRouter);
+app.use('/users',userRouter);
 
 const PORT = process.env.PORT || 8080;
 const URL = process.env.MONGODB_URL;
