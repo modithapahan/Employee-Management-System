@@ -1,21 +1,28 @@
 const router = require('express').Router();
-const jwt = require('jsonwebtoken');
-const user = require('../models/user');
+const User = require('../models/user');
+const bcrypt = require('bcrypt');
 
-router.route('/login').post(async (req,res, next) => {
-    const {nic, password} = req.body;
+router.post('/register', async(req,res) => {
 
-    let existinguser;
+      
+      const emailExist = User.findOne({email : req.body.email});
+      if(emailExist) return res.status(400).send('Email already exist');
 
-    try{
-        existinguser = await user.findOne({ nic:nic })
-    } catch{
-        const error = new Error('Error! Something went wrong.');
-        return next(error);
-    }
+      const salt = await bcrypt.genSalt(10);
+      const hashPassword = await bcrypt.hash(req.body.password, salt);
 
-    if(!existinguser || existinguser.password !== password){
-        const error = new Error('Wrong details please check at once');
-        return next(error);
-    }
-})
+      const user = new User({
+        name : req.body.name,
+        email : req.body.email,
+        password : hashPassword
+      })
+
+      try {
+        const saveUser = await user.save();
+        res.status(200).send({user: saveUser._id});
+      } catch (error) {
+        res.status(200).send(error);
+      }
+});
+
+module.exports = router;

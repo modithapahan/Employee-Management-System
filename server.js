@@ -1,35 +1,25 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
+const database = require('./databse/db');
+const bodyParser = require('body-parser');
 const cors = require('cors');
-const bodyparser = require('body-parser');
 
-/* import routes */
-const detailsRouter = require('./routes/details');
-const userRouter = require('./routes/users');
+/* Routes import */
+const userRoute = require('./routes/users');
 
 const app = express();
+
 app.use(cors());
-app.use(bodyparser.json());
+app.use(bodyParser.json());
 
-/* use routes */
-app.use('/details', detailsRouter);
-app.use('/users',userRouter);
+/* Use routes */
+app.use('/user', userRoute);
 
-const PORT = process.env.PORT || 8080;
-const URL = process.env.MONGODB_URL;
+const PORT = process.env.PORT || 3000;
 
-mongoose.connect(URL).then(()=>{
-    console.log('Database Connected!');
-}).catch((error) => {
-    console.log(error);
-})
+/* Databse Connection */
+database.dbConnection();
 
-app.listen(PORT, function(error){
-    if(error){
-        console.log(error);
-    }
-    else{
-        console.log(`App is running on ${PORT}`);
-    }
-})
+app.listen(PORT, ()=> {
+    console.log(`Server up & running on port ${PORT}`);
+});
