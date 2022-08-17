@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 /* Use routes */
 app.use('/user', userRoute);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 /* Databse Connection */
 database.dbConnection();
