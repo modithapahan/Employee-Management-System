@@ -1,25 +1,22 @@
 const express = require('express');
-const dotenv = require('dotenv').config();
-const database = require('./databse/db');
-const bodyParser = require('body-parser');
+const logger = require('./utils/logger');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+require('./utils/databaseConnection').connect();
 
-/* Routes import */
-const userRoute = require('./routes/users');
+/* Import Routes */
+const userRouter = require('./routes/users');
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 
-/* Use routes */
-app.use('/user', userRoute);
+/* Use Routes */
+app.use('/user', userRouter);
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
-/* Databse Connection */
-database.dbConnection();
-
-app.listen(PORT, ()=> {
-    console.log(`Server up & running on port ${PORT}`);
+app.listen(PORT, ()=>{
+    logger.info(`App is up & running on PORT ${PORT}`);
 });
