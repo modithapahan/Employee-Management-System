@@ -6,7 +6,7 @@ require('./utils/databaseConnection').connect();
 
 /* Import Routes */
 const userRouter = require('./routes/users');
-const postRouter = require('./routes/post');
+const noticeRouter = require('./routes/notices');
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 /* Use Routes */
 app.use('/user', userRouter);
-app.use('/user', postRouter);
+app.use('/notice', noticeRouter);
 
 const PORT = process.env.PORT || 3000;
 

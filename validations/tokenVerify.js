@@ -9,6 +9,6 @@ module.exports = function(req,res,next){
         req.user = verify;
         next();
     } catch (error) {
-        res.status(400).send('Invalid User');
+        res.status(400).send('Invalid User!');
     }
 }

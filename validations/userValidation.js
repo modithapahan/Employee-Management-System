@@ -19,5 +19,16 @@ const loginValidation = (data) => {
     return schema.validate(data);
 }
 
+const updateValidation = (data) => {
+    const schema = hapi.object({
+        name: hapi.string().min(6).required(),
+        email: hapi.string().min(6).required().email(),
+        password: hapi.string().min(6).required()
+    });
+
+    return schema.validate(data);
+}
+
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
+module.exports.updateValidation = updateValidation;
